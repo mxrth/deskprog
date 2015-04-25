@@ -1,7 +1,8 @@
 module Blueprint where
 import Prelude
-import Test.QuickCheck
-import Test.QuickCheck.Modifiers()
+
+--import Test.QuickCheck
+--import Test.QuickCheck.Modifiers()
 
 {-
  - Eine Block-Quersumme fasst jeweils mehrere Ziffern vor Summation
@@ -44,10 +45,10 @@ digitGroups :: Integer -> Integer -> [Integer]
 digitGroups _     0 = []
 digitGroups group n = (n `mod` divisor) : digitGroups group (n `div` divisor)
                         where divisor = 10^group
-
+{-
 --Some tests
 
-prop_unitTests = genQuer 3 False 1234567 == 802 && genQuer 3 True 1234567 == 334 && genQuer 2 True 54321 == 17
+--prop_unitTests = genQuer 3 False 1234567 == 802 && genQuer 3 True 1234567 == 334 && genQuer 2 True 54321 == 17
 
 --normale Quersumme erhält rest mod 3 und 9
 prop_querMod3 (NonNegative n) = genQuer 1 False n `mod` 3 == n `mod` 3
@@ -60,7 +61,7 @@ prop_altMod (NonNegative n) = altMod == n `mod` 11 || 11 - altMod  == n `mod` 11
 prop_groupedAltMod (NonNegative n) (NonZero (NonNegative group) ) = (altMod == (n `mod` modulus) ) || ((modulus - altMod)  == n `mod` modulus)
                                                                     where altMod = genQuer group True n `mod` modulus
                                                                           modulus = 10^group + 1
-
+-}
 
 
 
