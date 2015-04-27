@@ -15,14 +15,28 @@ data Bit = O | I  deriving (Eq, Show)
  -}
 
 encode :: [Either Bool Bool] -> [Bit]
-encode = undefined
+encode [] = []
+encode (Left a : xs) = O : en a : encode xs 
+encode (Right a : xs) = I : en a : encode xs
 
+en True = I
+en False = O
+
+de I = True
+de O = False
 {- welche aus jeder Liste des Typs [Either Bool Bool] eine Liste des
  - Typs [Bit] macht, sowie eine Funktion:
  -}
 
 decode :: [Bit] -> Maybe [Either Bool Bool]
-decode = undefined
+decode xs | length xs `mod` 2 == 0 = Just (decode' xs)
+          | otherwise = Nothing
+
+decode' :: [Bit] -> [Either Bool Bool]
+decode' [] = []
+decode' [_] = undefined
+decode' (O:a:xs) = Left (de a) : decode' xs
+decode' (I:a:xs) = Right (de a) : decode' xs
 
 {- welche aus jeder Liste des Typs [Bit], die mittels encode erzeugt
  - werden kann, einen Wert 'Just l' macht, wobei l gerade die Ursprungs-
